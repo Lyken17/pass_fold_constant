@@ -15,7 +15,28 @@ def check_call_info(call):
     mod = relay.transform.InferType()(mod)
     return mod['main'].body.checked_type
 
+import difflib
+
 def diff_print_expr(expr1: relay.Function, expr2: relay.Function):
+    ir_str1 = str(expr1).splitlines(keepends=True)
+    ir_str2 = str(expr2).splitlines(keepends=True)
+    
+    diff = difflib.unified_diff(ir_str1, ir_str2)
+    # print(''.join(diff))
+    lines = ""
+    for line in diff:
+        if line.startswith("-"):
+            lines += colored(line, "green")
+            # print("yes")
+        elif line.startswith("+"):
+            lines += colored(line, "red")
+        else:
+            lines += line
+    print(lines)
+
+
+
+def diff_print_expr_bakup(expr1: relay.Function, expr2: relay.Function):
     ir_str1 = str(expr1).split("\n")
     ir_str2 = str(expr2).split("\n")
 

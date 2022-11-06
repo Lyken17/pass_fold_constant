@@ -42,7 +42,6 @@ class SimplifyMulAddZero(DFPatternCallback):
         return pre
 
 
-
 def test_replace_op():
     w = relay.var("w", shape=[1, 10])
     x = relay.var("x", shape=[1, 10])
